@@ -1,7 +1,7 @@
 let order = [];
-let clickedOrder =[];
-let score=0;
-let time=0;
+let clickedOrder = [];
+let score = 0;
+let time = 0;
 
 
 // 0= verde, 1 = vermelho, 2= amarelo e 3 = azul
@@ -13,16 +13,16 @@ const green = document.querySelector('.green');
 const yellow = document.querySelector('.yellow');
 
 
-let shuffOrder = () =>{
+let shuffOrder = () => {
      colorOrder = Math.floor(Math.random() * 4);
 
      order[order.length] = colorOrder;
 
-     clickedOrder=[];
+     clickedOrder = [];
 
-     for(let i in order){
-        let elementColor = createColorElement(order[i]);
-        lightColor(elementColor, Number(i) + 1);
+     for (let i in order) {
+          let elementColor = createColorElement(order[i]);
+          lightColor(elementColor, Number(i) + 1);
      }
 }
 
@@ -30,9 +30,42 @@ let shuffOrder = () =>{
 let lightColor = (element, number) => {
      number = number * 500;
      setTimeout(() => {
-     element.classList.add('selected')
+          element.classList.add('selected')
      }, number - 250);
-setTimeou(() => {
-     element.classList.remove('selected');
-});
+     setTimeou(() => {
+          element.classList.remove('selected');
+     });
 }
+//
+let checkOrder = () => {
+     for (let i in clickedOrder){
+          if(clickedOrder[i] != order[i]){
+               lose();
+               break;
+          }
+     }
+
+     if(clickedOrder.length == order.length){
+          alert(`Pontuação ${score}\n Você acertou! Ininciando o próximo nível`);
+          nextLevel();
+     }
+}
+
+//
+let click = (color) => {
+     clickedOrder[clickedOrder.length] = color;
+     createColorElement(color).classList.add('selected');
+
+     setTimeout(() => {
+      createColorElement(color).classList.remove('selected');
+
+     })
+
+     checkOrder();
+}
+
+
+
+
+
+
